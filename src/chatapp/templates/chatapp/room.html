@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Chat Room - {{ room_name }}</title>
+    </head>
+    <body>
+        <textarea id="log" cols="10" rows="10"></textarea><br/>
+        <input id="message" type="text"/><br/>
+        <input id="send" type="button" value="send"/>
+    </body>
+</html>
+<script>
+const roomName = "{{ room_name }}";
+const webSocket = new WebSocket(`ws://${window.location.host}/room/${roomName}/consumer`);
+webSocket.addEventListener('message', (event) => {
+    document.getElementById('log').value += `${JSON.parse(event.data)['message']}\n`;
+});
+document.getElementById('send').addEventListener('click', (event) => {
+    webSocket.send(JSON.stringify({
+        'message': document.getElementById('message').value
+    }));
+});
+</script>

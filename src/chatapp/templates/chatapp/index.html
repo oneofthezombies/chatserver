@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Chat Lobby</title>
+    </head>
+    <body>
+        <form action="{% url 'chatapp:join' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="room-name"/>
+            <input type="submit" value="Join"/>
+        </form>
+    </body>
+</html>
